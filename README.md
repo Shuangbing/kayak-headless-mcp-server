@@ -52,7 +52,7 @@ Main inputs:
 - `sort`
 - `site`
 
-It returns only the final completed KAYAK poll result.
+It returns only `results` from the final completed KAYAK poll result.
 
 ## Local CLI
 
@@ -65,4 +65,3 @@ npm run fetch -- --origin TYO --destination TPE --departureDate 2026-06-18
 ## Cache
 
 Session cache files are stored under `.cache/` and are separated by KAYAK hostname.
-# kayak-headless-mcp-server

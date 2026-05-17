@@ -50,12 +50,7 @@ server.registerTool(
     });
 
     const structuredContent = {
-      source: result.source,
-      sessionCapturedAt: result.sessionCapturedAt,
-      status: result.data?.status,
-      searchId: result.data?.searchId,
-      totalCount: result.data?.totalCount,
-      result: result.data.results
+      results: result.data?.results ?? []
     };
 
     return {

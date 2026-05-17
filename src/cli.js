@@ -74,9 +74,7 @@ async function main() {
   console.log(
     JSON.stringify(
       {
-        source: result.source,
-        sessionCapturedAt: result.sessionCapturedAt,
-        data: result.data
+        results: result.data?.results ?? []
       },
       null,
       2
