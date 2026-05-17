@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { buildSearchOptions } from "./kayak-api.js";
 import { fetchKayakPoll } from "./kayak-client.js";
+import { formatKayakResults } from "./format-results.js";
 
 const server = new McpServer({
   name: "kayak-flights",
@@ -43,14 +44,17 @@ server.registerTool(
     })
   },
   async (input) => {
+    const searchOptions = buildSearchOptions(input);
     const result = await fetchKayakPoll({
-      ...buildSearchOptions(input),
+      ...searchOptions,
       pollIntervalMs: input.pollIntervalMs,
       maxPollAttempts: input.maxPollAttempts
     });
 
     const structuredContent = {
-      results: result.data?.results ?? []
+      results: formatKayakResults(result.data, {
+        siteOrigin: searchOptions.origin
+      })
     };
 
     return {

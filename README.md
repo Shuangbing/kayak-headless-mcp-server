@@ -52,7 +52,15 @@ Main inputs:
 - `sort`
 - `site`
 
-It returns only `results` from the final completed KAYAK poll result.
+It returns only a simplified `results` array with:
+
+- flight numbers
+- departure and arrival airports
+- departure and arrival times
+- stop count and transfer airports
+- price
+- booking source
+- direct open links
 
 ## Local CLI
 

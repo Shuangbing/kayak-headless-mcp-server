@@ -1,5 +1,6 @@
 import { fetchKayakPoll } from "./kayak-client.js";
 import { buildSearchOptions } from "./kayak-api.js";
+import { formatKayakResults } from "./format-results.js";
 
 function parseArgs(argv) {
   const options = {};
@@ -67,14 +68,15 @@ function buildParams(argv) {
 
 async function main() {
   const params = buildParams(process.argv.slice(2));
-  const result = await fetchKayakPoll({
-    ...buildSearchOptions(params)
-  });
+  const searchOptions = buildSearchOptions(params);
+  const result = await fetchKayakPoll(searchOptions);
 
   console.log(
     JSON.stringify(
       {
-        results: result.data?.results ?? []
+        results: formatKayakResults(result.data, {
+          siteOrigin: searchOptions.origin
+        })
       },
       null,
       2

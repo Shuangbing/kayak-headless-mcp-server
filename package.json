@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "fetch": "node src/cli.js",
-    "check": "node --check src/index.js && node --check src/cli.js && node --check src/kayak-api.js && node --check src/kayak-client.js"
+    "check": "node --check src/index.js && node --check src/cli.js && node --check src/kayak-api.js && node --check src/kayak-client.js && node --check src/format-results.js"
   },
   "dependencies": {
     "@cfworker/json-schema": "^4.1.1",
