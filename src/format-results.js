@@ -65,14 +65,39 @@ function flattenLeg(summary, prefix) {
   };
 }
 
+function isSponsoredOrPlaceholderResult(result) {
+  if (!result || typeof result !== "object") {
+    return true;
+  }
+
+  if (result?.fsrData?.sponsoredView) {
+    return true;
+  }
+
+  if (result?.isSponsored || result?.isAd || result?.isAdvertisement) {
+    return true;
+  }
+
+  const bookingOptions = Array.isArray(result?.bookingOptions) ? result.bookingOptions : [];
+  const legs = Array.isArray(result?.legs) ? result.legs : [];
+
+  // KAYAK ad/placeholder cards commonly lack real flight content entirely.
+  if (bookingOptions.length === 0 && legs.length === 0) {
+    return true;
+  }
+
+  return false;
+}
+
 export function formatKayakResults(data, options = {}) {
   const results = Array.isArray(data?.results) ? data.results : [];
+  const filteredResults = results.filter((result) => !isSponsoredOrPlaceholderResult(result));
   const lookup = {
     segments: data?.segments ?? {}
   };
   const siteOrigin = options.siteOrigin ?? "https://www.kayak.co.jp";
 
-  return results.map((result, index) => {
+  return filteredResults.map((result, index) => {
     const bookingOption = pickBestBookingOption(result);
     const providerName = result?.fsrData?.sponsoredView?.providerName ?? bookingOption?.providerCode ?? null;
     const legs = Array.isArray(result?.legs) ? result.legs.map((leg) => buildLegSummary(leg, lookup)) : [];
