@@ -52,15 +52,17 @@ Main inputs:
 - `sort`
 - `site`
 
-It returns only a simplified `results` array with:
+It returns a compact payload with `count` and a flattened `results` array.
 
-- flight numbers
-- departure and arrival airports
-- departure and arrival times
-- stop count and transfer airports
-- price
-- booking source
-- direct open links
+Each result keeps only the main fields, for example:
+
+- `price`, `currency`, `priceText`
+- `provider`, `providerCode`
+- `detailsUrl`, `bookingUrl`
+- `outboundDepartureTime`, `outboundArrivalTime`
+- `outboundDepartureAirport`, `outboundArrivalAirport`
+- `outboundStops`, `outboundStopAirports`, `outboundFlightNumbers`
+- return leg equivalents like `returnDepartureTime` when present
 
 ## Local CLI
 

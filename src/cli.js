@@ -70,13 +70,15 @@ async function main() {
   const params = buildParams(process.argv.slice(2));
   const searchOptions = buildSearchOptions(params);
   const result = await fetchKayakPoll(searchOptions);
+  const results = formatKayakResults(result.data, {
+    siteOrigin: searchOptions.origin
+  });
 
   console.log(
     JSON.stringify(
       {
-        results: formatKayakResults(result.data, {
-          siteOrigin: searchOptions.origin
-        })
+        count: results.length,
+        results
       },
       null,
       2

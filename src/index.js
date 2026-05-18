@@ -51,17 +51,19 @@ server.registerTool(
       maxPollAttempts: input.maxPollAttempts
     });
 
+    const results = formatKayakResults(result.data, {
+      siteOrigin: searchOptions.origin
+    });
     const structuredContent = {
-      results: formatKayakResults(result.data, {
-        siteOrigin: searchOptions.origin
-      })
+      count: results.length,
+      results
     };
 
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(structuredContent, null, 2)
+          text: JSON.stringify(structuredContent)
         }
       ],
       structuredContent
