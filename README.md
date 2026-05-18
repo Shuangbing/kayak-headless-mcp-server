@@ -50,7 +50,10 @@ Main inputs:
 - `infants`
 - `directOnly`
 - `sort`
+- `limit`
 - `site`
+
+`sort` controls KAYAK ordering, and `limit` can be used to return only the first `N` items from that sorted list.
 
 It returns a compact payload with `count` and a flattened `results` array.
 
@@ -136,6 +139,12 @@ For debugging without MCP:
 
 ```bash
 npm run fetch -- --origin TYO --destination TPE --departureDate 2026-06-18
+```
+
+Limit the output to the top 3 sorted results:
+
+```bash
+npm run fetch -- --origin TYO --destination TPE --departureDate 2026-06-18 --sort price_a --limit 3
 ```
 
 ## Cache

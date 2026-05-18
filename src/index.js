@@ -34,6 +34,13 @@ server.registerTool(
         .string()
         .default("bestflight_a")
         .describe("KAYAK sort mode, for example bestflight_a or price_a."),
+      limit: z
+        .number()
+        .int()
+        .min(1)
+        .max(100)
+        .optional()
+        .describe("Optional max number of sorted results to return."),
       site: z
         .string()
         .default("www.kayak.co.jp")
@@ -54,9 +61,10 @@ server.registerTool(
     const results = formatKayakResults(result.data, {
       siteOrigin: searchOptions.origin
     });
+    const limitedResults = input.limit ? results.slice(0, input.limit) : results;
     const structuredContent = {
-      count: results.length,
-      results
+      count: limitedResults.length,
+      results: limitedResults
     };
 
     return {

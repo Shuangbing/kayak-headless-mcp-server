@@ -61,6 +61,7 @@ function buildParams(argv) {
     pageNumber: toInteger(args.pageNumber, 1),
     directOnly: toBoolean(args.directOnly, false),
     sort: args.sort ?? "bestflight_a",
+    limit: args.limit === undefined ? undefined : toInteger(args.limit),
     ucs: args.ucs,
     site: args.site
   };
@@ -73,12 +74,13 @@ async function main() {
   const results = formatKayakResults(result.data, {
     siteOrigin: searchOptions.origin
   });
+  const limitedResults = params.limit ? results.slice(0, params.limit) : results;
 
   console.log(
     JSON.stringify(
       {
-        count: results.length,
-        results
+        count: limitedResults.length,
+        results: limitedResults
       },
       null,
       2
